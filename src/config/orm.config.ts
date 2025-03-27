@@ -1,6 +1,5 @@
 import { ConfigService } from '@nestjs/config'
 import { TypeOrmModuleOptions } from '@nestjs/typeorm'
-import passport from 'passport'
 import { Entity } from 'typeorm'
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions'
 
@@ -16,10 +15,10 @@ export const ORMConfig = async (configService: ConfigService): Promise<Connectio
   database: configService.get('DATABASE_NAME'),
   entities: ['dist/**/*.entity.ts'],
   synchronize: true, // in dev mode
-  ssl: true,
-  extra: {
-    ssl: {
-      rejectUnauthorized: false,
-    },
-  },
+  //ssl: true,                   I HAVE COMMENTED THIS OUT BECAUSE OF THIS { The PostgreSQL instance is running localy thats why enforcing ssl makes the postgresql server reject it. }
+  //   extra: {
+  //     ssl: {
+  //       rejectUnauthorized: false,
+  //     },
+  //   },
 })
