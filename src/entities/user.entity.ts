@@ -1,7 +1,8 @@
 import { Exclude } from 'class-transformer'
 import { Base } from './base.entity'
-import { Column } from 'typeorm'
+import { Column, Entity } from 'typeorm'
 
+@Entity()
 export class User extends Base {
   @Column({ unique: true })
   email: string
