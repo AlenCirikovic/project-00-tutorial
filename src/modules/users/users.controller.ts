@@ -18,6 +18,8 @@ import { User } from 'entities/user.entity'
 import { UserData } from 'interfaces/user.interface'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
+import { FileInterceptor } from '@nestjs/platform-express'
+import { saveImageToStorage } from 'helpers/imageStorage'
 
 @Controller('users')
 @UseInterceptors(ClassSerializerInterceptor) // We need the ClassSerializerInterceptor so that the @Exclude from User entity columns are added
@@ -42,6 +44,8 @@ export class UsersController {
     return this.usersService.create(createUserDto)
   }
 
+  @Post('upload/:id')
+  @UseInterceptors(FileInterceptor('avatar', saveImageToStorage))
   @Patch(':id')
   @HttpCode(HttpStatus.OK)
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<User> {
