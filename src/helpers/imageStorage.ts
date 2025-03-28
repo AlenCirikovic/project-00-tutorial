@@ -1,5 +1,7 @@
 const FileType = import('file-type')
+import { Logger } from '@nestjs/common'
 import fs from 'fs'
+import Logging from 'library/Logging'
 import { diskStorage, Options } from 'multer'
 import { extname } from 'path'
 
@@ -22,4 +24,26 @@ export const saveImageToStorage: Options = {
       callback(null, filename)
     },
   }),
+  fileFilter(req, file, callback) {
+    const allowedMimeTypes: validMimeType[] = validMimeTypes
+    allowedMimeTypes.includes(file.mimetype as validMimeType) ? callback(null, true) : callback(null, false)
+  },
+}
+
+export const isFileExtensionSafe = async (fullFilePath: string): Promise<boolean> => {
+  return (await FileType).fileTypeFromFile(fullFilePath).then((fileExtensionAndMimeType) => {
+    if (!fileExtensionAndMimeType?.ext) return false
+    const isFileTypeLegit = validFileExtensions.includes(fileExtensionAndMimeType.ext as validFileExtensionsType)
+    const isMimeTypeLegit = validMimeTypes.includes(fileExtensionAndMimeType.mime as validMimeType)
+    const isFileLegit = isFileTypeLegit && isMimeTypeLegit
+    return isFileLegit
+  })
+}
+
+export const removeFile = (fullFilePath: string): void => {
+  try {
+    fs.unlinkSync(fullFilePath)
+  } catch (error) {
+    Logging.error(error)
+  }
 }
