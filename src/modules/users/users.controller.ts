@@ -2,10 +2,12 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
   Param,
+  Patch,
   Post,
   Query,
   UseInterceptors,
@@ -14,6 +16,8 @@ import { UsersService } from './users.service'
 import { PaginatedResult } from 'interfaces/paginated-result.interface'
 import { User } from 'entities/user.entity'
 import { UserData } from 'interfaces/user.interface'
+import { CreateUserDto } from './dto/create-user.dto'
+import { UpdateUserDto } from './dto/update-user.dto'
 
 @Controller('users')
 @UseInterceptors(ClassSerializerInterceptor) // We need the ClassSerializerInterceptor so that the @Exclude from User entity columns are added
@@ -36,5 +40,17 @@ export class UsersController {
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.usersService.create(createUserDto)
+  }
+
+  @Patch(':id')
+  @HttpCode(HttpStatus.OK)
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<User> {
+    return this.usersService.update(id, updateUserDto)
+  }
+
+  @Delete()
+  @HttpCode(HttpStatus.OK)
+  async remove(@Param('id') id: string): Promise<User> {
+    return this.usersService.remove(id)
   }
 }
