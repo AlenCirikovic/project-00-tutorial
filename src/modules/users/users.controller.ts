@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   ClassSerializerInterceptor,
   Controller,
@@ -10,6 +11,7 @@ import {
   Patch,
   Post,
   Query,
+  UploadedFile,
   UseInterceptors,
 } from '@nestjs/common'
 import { UsersService } from './users.service'
@@ -19,7 +21,8 @@ import { UserData } from 'interfaces/user.interface'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { FileInterceptor } from '@nestjs/platform-express'
-import { saveImageToStorage } from 'helpers/imageStorage'
+import { isFileExtensionSafe, removeFile, saveImageToStorage } from 'helpers/imageStorage'
+import { join } from 'path'
 
 @Controller('users')
 @UseInterceptors(ClassSerializerInterceptor) // We need the ClassSerializerInterceptor so that the @Exclude from User entity columns are added
@@ -46,6 +49,19 @@ export class UsersController {
 
   @Post('upload/:id')
   @UseInterceptors(FileInterceptor('avatar', saveImageToStorage))
+  @HttpCode(HttpStatus.CREATED)
+  async upload(@UploadedFile() file: Express.Multer.File, @Param('id') id: string): Promise<User> {
+    const filename = file?.filename
+    if (!filename) throw new BadRequestException('File must be a png, jpg or jpeg')
+    const imagesFolderPath = join(process.cwd(), 'files')
+    const fullImagePath = join(imagesFolderPath + '/' + file.filename)
+    if (await isFileExtensionSafe(fullImagePath)) {
+      return this.usersService.updateUserImageId(id, filename)
+    }
+    removeFile(fullImagePath)
+    throw new BadRequestException('File content does not match extension!')
+  }
+
   @Patch(':id')
   @HttpCode(HttpStatus.OK)
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<User> {
