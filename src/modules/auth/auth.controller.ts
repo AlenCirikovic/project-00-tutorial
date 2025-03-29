@@ -1,7 +1,17 @@
-import { ClassSerializerInterceptor, Controller, HttpCode, HttpStatus, UseInterceptors } from '@nestjs/common'
-import { AuthService } from './auth.service'
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  UseInterceptors,
+} from '@nestjs/common'
 import { Public } from 'decorators/public.decorator'
 import { User } from 'entities/user.entity'
+
+import { AuthService } from './auth.service'
+import { RegisterUserDto } from './dto/register-user.dto'
 
 @Controller('auth')
 @UseInterceptors(ClassSerializerInterceptor)

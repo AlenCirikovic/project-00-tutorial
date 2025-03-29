@@ -14,15 +14,15 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common'
-import { UsersService } from './users.service'
 import { PaginatedResult } from 'interfaces/paginated-result.interface'
 import { User } from 'entities/user.entity'
-import { UserData } from 'interfaces/user.interface'
-import { CreateUserDto } from './dto/create-user.dto'
-import { UpdateUserDto } from './dto/update-user.dto'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { isFileExtensionSafe, removeFile, saveImageToStorage } from 'helpers/imageStorage'
 import { join } from 'path'
+
+import { CreateUserDto } from './dto/create-user.dto'
+import { UpdateUserDto } from './dto/update-user.dto'
+import { UsersService } from './users.service'
 
 @Controller('users')
 @UseInterceptors(ClassSerializerInterceptor) // We need the ClassSerializerInterceptor so that the @Exclude from User entity columns are added

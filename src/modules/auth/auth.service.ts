@@ -1,9 +1,11 @@
-import { BadGatewayException, BadRequestException, Injectable } from '@nestjs/common'
+import { BadRequestException, Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { User } from 'entities/user.entity'
 import Logging from 'library/Logging'
 import { UsersService } from 'modules/users/users.service'
-import { compareHash } from 'utils/bcrypt'
+import { compareHash, hash } from 'utils/bcrypt'
+
+import { RegisterUserDto } from './dto/register-user.dto'
 
 @Injectable()
 export class AuthService {
@@ -20,5 +22,13 @@ export class AuthService {
     }
     Logging.info('User is valid.')
     return user
+  }
+
+  async register(registerUserDto: RegisterUserDto): Promise<User> {
+    const hashedPassword = await hash(registerUserDto.password)
+    return this.usersService.create({
+      ...registerUserDto,
+      password: hashedPassword,
+    })
   }
 }
