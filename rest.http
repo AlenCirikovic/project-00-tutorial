@@ -19,3 +19,11 @@ Content-Type: application/json
   	"email": "john@gmail.com",
   	"password": "John123!"
 }
+
+
+### GET /auth
+GET  http://localhost:8080/auth HTTP/1.1
+
+### POST /auth/signout
+POST http://localhost:8080/auth/signout HTTP/1.1
+

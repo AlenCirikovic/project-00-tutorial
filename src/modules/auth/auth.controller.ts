@@ -49,4 +49,11 @@ export class AuthController {
     const cookie = req.cookies['access_token']
     return this.authService.user(cookie)
   }
+
+  @Post('signout')
+  @HttpCode(HttpStatus.OK)
+  async signout(@Res({ passthrough: true }) res: Response): Promise<{ msg: string }> {
+    res.clearCookie('access_token')
+    return { msg: 'ok' }
+  }
 }
