@@ -2,6 +2,7 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
@@ -40,5 +41,12 @@ export class AuthController {
     const access_token = await this.authService.generateJwt(req.user)
     res.cookie('access_token', access_token, { httpOnly: true })
     return req.user
+  }
+
+  @Get()
+  @HttpCode(HttpStatus.OK)
+  async user(@Req() req: Request): Promise<User> {
+    const cookie = req.cookies['access_token']
+    return this.authService.user(cookie)
   }
 }
