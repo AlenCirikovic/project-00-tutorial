@@ -31,4 +31,8 @@ export class AuthService {
       password: hashedPassword,
     })
   }
+
+  async generateJwt(user: User): Promise<string> {
+    return this.jwtService.signAsync({ sub: user.id, name: user.email })
+  }
 }
