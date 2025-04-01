@@ -45,13 +45,23 @@ Content-Type: application/json
 ### GET /roles
 GET http://localhost:8080/roles HTTP/1.1
 
+### DELETE /roles/:id
+DELETE http://localhost:8080/roles/c0123208-6192-463f-b29a-bb673b518191 HTTP/1.1
+
 ### POST /roles
 POST http://localhost:8080/roles HTTP/1.1
 Content-Type: application/json
 
 {
 	"name": "Admin",
-	"permissions": []
+	"permissions": ["47b32317-152f-4c63-8c8d-d9a1880cbf32"]
 }
 
+### PATCH /roles/:id
+PATCH http://localhost:8080/roles/4a6206ca-5208-4775-a019-8bb8a28f0411 HTTP/1.1
+Content-Type: application/json
 
+{
+	"name":"Admin",
+	"permissions":["47b32317-152f-4c63-8c8d-d9a1880cbf32","4d6fcf64-8636-45e3-b36b-2a66a4891b9e"]
+}

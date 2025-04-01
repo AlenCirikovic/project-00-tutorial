@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query } from '@nestjs/common'
+import { BadRequestException, Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query } from '@nestjs/common'
 import { PaginatedResult } from 'interfaces/paginated-result.interface'
 import { RolesService } from './roles.service'
 import { Role } from 'entities/role.entity'
