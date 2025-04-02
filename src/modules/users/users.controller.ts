@@ -23,6 +23,7 @@ import { join } from 'path'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { UsersService } from './users.service'
+import { HasPermission } from 'decorators/has-permission.decorator'
 
 @Controller('users')
 @UseInterceptors(ClassSerializerInterceptor) // We need the ClassSerializerInterceptor so that the @Exclude from User entity columns are added
@@ -30,6 +31,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
+  @HasPermission('users')
   @HttpCode(HttpStatus.OK)
   async findAll(@Query('page') page: number): Promise<PaginatedResult> {
     return this.usersService.paginate(page, ['role'])

@@ -25,7 +25,7 @@ PATCH http://localhost:8080/users/0f96404a-7968-4570-893e-b7c128514b9b HTTP/1.1
 Content-Type: application/json
 
 {
-  	"emai": "johnny@gmail.com"
+  	"email": "john@gmail.com"
 }
 
 ### GET /auth
