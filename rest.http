@@ -6,7 +6,7 @@ POST http://localhost:8080/auth/register HTTP/1.1
 Content-Type: application/json
 
 {
-  	"email": "john@gmail.com",
+  	"email": "test@gmail.com",
   	"password": "John123!",
   	"confirm_password": "John123!"
 }
@@ -25,7 +25,7 @@ PATCH http://localhost:8080/users/0f96404a-7968-4570-893e-b7c128514b9b HTTP/1.1
 Content-Type: application/json
 
 {
-  	"email": "john@gmail.com"
+  	"role_id": "80ce4f22-cfdd-41da-9b0d-3b84a937edbf"
 }
 
 ### GET /auth
@@ -61,8 +61,8 @@ POST http://localhost:8080/roles HTTP/1.1
 Content-Type: application/json
 
 {
-	"name": "Admin",
-	"permissions": ["47b32317-152f-4c63-8c8d-d9a1880cbf32"]
+	"name": "Viewer",
+	"permissions": ["012aeb98-d21c-4c42-8804-7d314d0b2643"]
 }
 
 ### PATCH /roles/:id

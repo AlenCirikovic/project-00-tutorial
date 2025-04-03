@@ -16,18 +16,29 @@ export class PermissionsGuard implements CanActivate {
     private rolesService: RolesService,
   ) {}
 
-  async canActivate(context: ExecutionContext): Promise<boolean> {
-    const access = this.reflector.get('access', context.getHandler())
-    if (!access) {
-      return true
+  async canActivate(contex: ExecutionContext): Promise<boolean> {
+    const access = this.reflector.get('access', contex.getHandler())
+
+    if (!access) return true
+
+    const request = contex.switchToHttp().getRequest()
+    
+    // Dobimo uporabnika iz access_tokena
+    const user = await this.authService.user(request.cookies['access_token'] || '')
+
+    // Če uporabnik nima povezane role - potem nima pravic dostopa
+    if (!user.role) {
+      return false
     }
-    const request = context.switchToHttp().getRequest()
-    const userId = await this.authService.getUserId(request)
-    const user: User = await this.usersService.findById(userId, ['role'])
+
+    // Pridobimo pravice za rolo
     const role: Role = await this.rolesService.findById(user.role.id, ['permissions'])
+
+    // (for the read operations) || p - permission || - If user has 'view_blogpost' or 'view_edit' permissions. And if they do, the request is allowed to proceed and the blog post is displayed to the user:
     if (request.method === 'GET') {
-      return role.permissions.some((p) => p.name === `view_${access}` || p.name === `edit_${access}`)
+      return role.permissions.some((p) => p.name === `view${access}` || p.name === `edit${access}`)
     }
-    return role.permissions.some((p) => p.name === `edit_${access}`)
+    // (for write operations) -  If method is not GET, it checks if the roles permissions include 'edit_access.
+    return role.permissions.some((p) => p.name === `edit${access}`)
   }
 }

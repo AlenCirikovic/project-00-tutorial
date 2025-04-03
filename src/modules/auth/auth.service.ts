@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common'
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { User } from 'entities/user.entity'
 import Logging from 'library/Logging'
@@ -39,7 +39,7 @@ export class AuthService {
 
   async user(cookie: string): Promise<User> {
     const data = await this.jwtService.verifyAsync(cookie)
-    return this.usersService.findById(data['id'])
+    return this.usersService.findById(data['id'],['role'])
   }
 
   async getUserId(request: Request): Promise<string> {
