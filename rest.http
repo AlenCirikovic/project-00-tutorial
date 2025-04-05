@@ -16,16 +16,16 @@ POST http://localhost:8080/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
-  	"email": "john@gmail.com",
-  	"password": "John123!"
+  	"email": "testing@gmail.com",
+  	"password": "Testing123!"
 }
 
 ### PATCH /users/:id
-PATCH http://localhost:8080/users/0f96404a-7968-4570-893e-b7c128514b9b HTTP/1.1
+PATCH http://localhost:8080/users/7d910eb7-bd70-4dad-ae12-583abc781cdd HTTP/1.1
 Content-Type: application/json
 
 {
-  	"role_id": "80ce4f22-cfdd-41da-9b0d-3b84a937edbf"
+  	"role_id": "f533566d-c50d-4af4-831e-dc7afc704887"
 }
 
 ### GET /auth
@@ -37,7 +37,7 @@ POST http://localhost:8080/auth/signout HTTP/1.1
 
 
 ### GET /users
-GET http://localhost:8080/users HTTP/1.1
+GET http://localhost:8080/users HTTP/1.1git ad
 
 ### GET /permissions
 GET http://localhost:8080/permissions HTTP/1.1
@@ -61,8 +61,8 @@ POST http://localhost:8080/roles HTTP/1.1
 Content-Type: application/json
 
 {
-	"name": "Viewer",
-	"permissions": ["012aeb98-d21c-4c42-8804-7d314d0b2643"]
+	"name": "Admin",
+	"permissions": ["6577de97-5e64-464e-a29d-110b22df2c02","05b9e548-6ec3-451c-96bc-86bc18de04de"]
 }
 
 ### PATCH /roles/:id

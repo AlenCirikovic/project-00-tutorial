@@ -18,11 +18,12 @@ export class PermissionsGuard implements CanActivate {
 
   async canActivate(contex: ExecutionContext): Promise<boolean> {
     const access = this.reflector.get('access', contex.getHandler())
-
-    if (!access) return true
+    if (!access) {
+      return true
+    }
 
     const request = contex.switchToHttp().getRequest()
-    
+
     // Dobimo uporabnika iz access_tokena
     const user = await this.authService.user(request.cookies['access_token'] || '')
 

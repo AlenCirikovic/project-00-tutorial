@@ -39,7 +39,7 @@ export class AuthService {
 
   async user(cookie: string): Promise<User> {
     const data = await this.jwtService.verifyAsync(cookie)
-    return this.usersService.findById(data['id'],['role'])
+    return this.usersService.findById(data['sub'], ['role'])
   }
 
   async getUserId(request: Request): Promise<string> {
