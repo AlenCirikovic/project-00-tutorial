@@ -12,6 +12,7 @@ import { JwtAuthGuard } from './auth/guards/jwt.guard'
 import { PermissionsGuard } from './permissions/guards/permission.guard'
 import { JwtModule } from '@nestjs/jwt'
 import { ProductsModule } from './products/products.module'
+import { OrdersModule } from './orders/orders.module'
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { ProductsModule } from './products/products.module'
     RolesModule,
     PermissionsModule,
     ProductsModule,
+    OrdersModule,
   ],
   controllers: [],
   providers: [
