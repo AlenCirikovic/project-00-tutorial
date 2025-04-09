@@ -1,7 +1,7 @@
 import {
-  Controller,
   BadRequestException,
   Body,
+  Controller,
   Delete,
   Get,
   HttpCode,
@@ -13,14 +13,14 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common'
-
 import { FileInterceptor } from '@nestjs/platform-express'
 import { Product } from 'entities/product.entity'
 import { isFileExtensionSafe, removeFile, saveImageToStorage } from 'helpers/imageStorage'
 import { PaginatedResult } from 'interfaces/paginated-result.interface'
 import { join } from 'path'
-import { ProductsService } from './products.service'
+
 import { CreateUpdateProductDto } from './dto/create-update-product.dto'
+import { ProductsService } from './products.service'
 
 @Controller('products')
 export class ProductsController {

@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsEmail, Matches } from 'class-validator'
+import { IsEmail, IsNotEmpty, IsOptional, Matches } from 'class-validator'
 import { Match } from 'decorators/match.decorator'
 
 export class CreateUserDto {

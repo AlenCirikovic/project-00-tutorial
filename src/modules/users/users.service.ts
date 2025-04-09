@@ -1,13 +1,14 @@
 import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { User } from 'entities/user.entity'
+import { PostgresErrorCode } from 'helpers/postgresErrorCode.enum'
+import Logging from 'library/Logging'
 import { AbstractService } from 'modules/common/abstract.service'
 import { Repository } from 'typeorm'
-import { CreateUserDto } from './dto/create-user.dto'
-import Logging from 'library/Logging'
-import { UpdateUserDto } from './dto/update-user.dto'
 import { compareHash, hash } from 'utils/bcrypt'
-import { PostgresErrorCode } from 'helpers/postgresErrorCode.enum'
+
+import { CreateUserDto } from './dto/create-user.dto'
+import { UpdateUserDto } from './dto/update-user.dto'
 
 @Injectable()
 export class UsersService extends AbstractService {

@@ -41,6 +41,7 @@ GET http://localhost:8080/users HTTP/1.1
 
 ### GET /orders
 GET http://localhost:8080/orders HTTP/1.1
+
 ### GET /orders/chart
 GET http://localhost:8080/orders/chart HTTP/1.1
 

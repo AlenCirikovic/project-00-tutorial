@@ -1,19 +1,19 @@
 import {
   ClassSerializerInterceptor,
   Controller,
-  UseInterceptors,
   Get,
   HttpCode,
+  HttpStatus,
   Post,
   Query,
   Res,
-  HttpStatus,
+  UseInterceptors,
 } from '@nestjs/common'
-
-import { response, Response } from 'express'
-import { PaginatedResult } from 'interfaces/paginated-result.interface'
-import { OrdersService } from './orders.service'
 import { Public } from 'decorators/public.decorator'
+import { Response } from 'express'
+import { PaginatedResult } from 'interfaces/paginated-result.interface'
+
+import { OrdersService } from './orders.service'
 
 @Controller('orders')
 @UseInterceptors(ClassSerializerInterceptor)

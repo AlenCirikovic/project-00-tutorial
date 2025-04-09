@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { AbstractService } from 'modules/common/abstract.service'
-import { Repository } from 'typeorm'
 import { Order } from 'entities/order.entity'
 import { Response } from 'express'
 import { Parser } from 'json2csv'
+import { AbstractService } from 'modules/common/abstract.service'
+import { Repository } from 'typeorm'
 
 @Injectable()
 export class OrdersService extends AbstractService {
@@ -50,7 +50,7 @@ export class OrdersService extends AbstractService {
 
   async chart(): Promise<{ date: string; sum: string }[]> {
     const apiData = await this.ordersRepository.query(`
-                SELECT to_date(cast(o.created_at as TEXT), '%Y-%m-%d') as Date, sum(oi.price * oi.quantity) as sum FROM "order" o
+                SELECT to_date(cast(o.created_at as TEXT), '%Y-%m-%d') as date, sum(oi.price * oi.quantity) as sum FROM "order" o
                 JOIN "order_item" oi ON o.id = oi.order_id
                 GROUP BY date;
             `)
@@ -62,7 +62,6 @@ export class OrdersService extends AbstractService {
         sum: apiData[index].sum,
       })
     }
-
     return chartData
   }
 }
